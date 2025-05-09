@@ -2,25 +2,27 @@ import Course from '../models/course.js';
 
 export const createCourse = async (req, res) => {
     try {
+        const { title, about, options, topics, content, image } = req.body;
         const course = new Course({
-            course_name: req.body.course_name,
-            rating: req.body.rating,
-            no_of_hours: req.body.no_of_hours,
-            course_overview: req.body.course_overview,
-            course_image: req.body.course_image,
-            course_content: req.body.course_content
-        });
-        const newCourse = await course.save()
-        res.status(200).json({ success: true, data: newCourse })
+            title,
+            about,
+            options,
+            topics,
+            content,
+            image
+        })
+        await course.save();
+        res.status(201).json({ message: 'Course added' })
     } catch (error) {
         res.status(500).json(error)
+        console.log(error)
     }
 }
 
 export const listCourses = async (req, res) => {
     try {
         const courses = await Course.find();
-        res.status(200).json({ data: courses })
+        res.status(200).json(courses)
     } catch (error) {
         res.status(500).json(error)
     }
@@ -28,8 +30,8 @@ export const listCourses = async (req, res) => {
 
 export const listCourse = async (req, res) => {
     try {
-        const course = await Course.findById({ _id: req.params.id }).populate('course_content');
-        res.status(200).json({ data: course })
+        const course = await Course.findById({ _id: req.params.id });
+        res.status(200).json(course)
     } catch (error) {
         res.status(500).json(error)
     }

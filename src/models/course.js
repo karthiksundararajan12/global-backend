@@ -1,28 +1,38 @@
 import mongoose from 'mongoose';
 
 const CourseSchema = mongoose.Schema({
-    course_name: {
+    title: {
         type: String,
         required: true
     },
-    rating: {
+    about: {
         type: String,
         required: true
     },
-    no_of_hours: {
-        type: String,
-        required: true
-    },
-    course_overview: {
+    options: [
+        { title: { type: String } }
+    ],
+    topics: [
+        {
+            name: {
+                type: String,
+                required: true
+            }
+        }
+    ],
+    content: [
+        {
+            title: {
+                type: String,
+                required: true
+            },
+            description: [
+                { name: { type: String } }
+            ]
+        }
+    ],
+    image: {
         type: String
-    },
-    course_image: {
-        type: String
-    },
-    course_content: [],
-    create_at: {
-        type: Date,
-        default: Date.now
     }
 })
 export default mongoose.model('Course', CourseSchema);
