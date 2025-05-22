@@ -30,7 +30,8 @@ export const listCourses = async (req, res) => {
 
 export const listCourse = async (req, res) => {
     try {
-        const course = await Course.findById({ _id: req.params.id });
+        const { title } = req.params;
+        const course = await Course.findOne({ title: new RegExp(`^${title}$`, 'i') });
         res.status(200).json(course)
     } catch (error) {
         res.status(500).json(error)
